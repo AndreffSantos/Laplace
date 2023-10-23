@@ -4,37 +4,32 @@ M1 = [1] # Determinante = 1
 M2 = [[2, 3], [1, 4]] # Determinante = 5
 M3 = [[3, 1, 0], [-2, 2, 3], [0, 1, 2]] # Determinante = 7
 
-def set_matrix(n: int):
+def gera_matriz_aleatoria(n: int):
     return [[randrange(5) for coloumn in range(n)] for line in range(n)]
 
-def det(matrix: list):
-    if len(matrix) == 1:
-        return matrix[0]
+def determinante(matriz: list):
+    if len(matriz) == 1:
+        return matriz[0]
     
-    determinant = 0
-    first_line = matrix[0]
-    for colomn in range(len(first_line)):
-        determinant += first_line[colomn] * cof(matrix, colomn)
+    det = 0
+    primeira_linha = matriz[0]
+    for coluna in range(len(primeira_linha)):
+        det += primeira_linha[coluna] * pow(-1, coluna) * determinante(matriz_de_ordem_menor(matriz, coluna))
     
-    return determinant
+    return det
 
-def cof(matrix: list, index: int):
-    i = 1
-    j = index + 1
-    return pow(-1, (i + j)) * det(minor(matrix, index))
-
-def minor(matrix: list, index: int):
-    if len(matrix) > 2:
-        return [[matrix[line][colomn] for colomn in range(len(matrix[line])) if colomn != index] for line in range(len(matrix)) if line != 0]
-    return [[matrix[line][colomn] for colomn in range(len(matrix[line])) if colomn != index][0] for line in range(len(matrix)) if line != 0]
+def matriz_de_ordem_menor(matriz: list, index: int):
+    if len(matriz) > 2:
+        return [[matriz[linha][coluna] for coluna in range(len(matriz[linha])) if coluna != index] for linha in range(len(matriz)) if linha != 0]
+    return [[matriz[linha][coluna] for coluna in range(len(matriz[linha])) if coluna != index][0] for linha in range(len(matriz)) if linha != 0]
     
-print(det(M1))
-print(det(M2))
-print(det(M3))
+print(determinante(M1))
+print(determinante(M2))
+print(determinante(M3))
 
-M4 = set_matrix(2)
-print(M4, det(M4))
-M5 = set_matrix(3)
-print(M5, det(M5))
-M6 = set_matrix(4)
-print(M6, det(M6))
+M4 = gera_matriz_aleatoria(2)
+print(M4, determinante(M4))
+M5 = gera_matriz_aleatoria(3)
+print(M5, determinante(M5))
+M6 = gera_matriz_aleatoria(4)
+print(M6, determinante(M6))
